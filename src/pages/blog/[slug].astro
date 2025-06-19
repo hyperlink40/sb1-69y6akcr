@@ -1,0 +1,476 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import Header from '../../components/Header.astro';
+import Footer from '../../components/Footer.astro';
+
+// This function is required for dynamic routes in Astro
+export async function getStaticPaths() {
+  return [
+    {
+      params: { slug: 'getting-started-with-astro' }
+    }
+  ];
+}
+
+// Sample blog post data - in a real app, this would be fetched based on the slug
+const { slug } = Astro.params;
+
+// Sample post data
+const post = {
+  title: "Getting Started with Astro: A Complete Guide",
+  description: "Learn how to build fast, modern websites with Astro's innovative island architecture and zero-JS by default approach.",
+  content: `
+# Getting Started with Astro: A Complete Guide
+
+Astro is a revolutionary web framework that's changing how we build modern websites. In this comprehensive guide, we'll explore everything you need to know to get started with Astro.
+
+## What is Astro?
+
+Astro is a **static site generator** built for the modern web. It allows you to build websites using your favorite UI components from React, Vue, Svelte, and more, while generating static HTML with zero JavaScript by default.
+
+### Key Features
+
+- **Zero JavaScript by default**: Astro generates static HTML, CSS, and only the JavaScript you need
+- **Component Islands**: Interactive components are loaded independently
+- **Framework agnostic**: Use React, Vue, Svelte, or plain HTML/CSS/JS
+- **Built-in optimizations**: Image optimization, CSS scoping, and more
+
+## Why Choose Astro?
+
+Here are some compelling reasons to consider Astro for your next project:
+
+1. **Performance**: Sites load faster with minimal JavaScript
+2. **Developer Experience**: Great tooling and hot module replacement
+3. **Flexibility**: Mix and match different frameworks
+4. **SEO-friendly**: Static HTML is perfect for search engines
+
+## Getting Started
+
+To create a new Astro project, run:
+
+\`\`\`bash
+npm create astro@latest my-astro-site
+cd my-astro-site
+npm run dev
+\`\`\`
+
+This will create a new Astro project and start the development server.
+
+## Project Structure
+
+A typical Astro project looks like this:
+
+\`\`\`
+my-astro-site/
+├── src/
+│   ├── components/
+│   ├── layouts/
+│   └── pages/
+├── public/
+└── astro.config.mjs
+\`\`\`
+
+### Pages
+
+Pages in Astro are files inside the \`src/pages/\` directory. They can be:
+- \`.astro\` files
+- \`.md\` files
+- \`.js\`/\`.ts\` files that export a component
+
+### Components
+
+Components live in \`src/components/\` and can be written in Astro syntax or any supported framework.
+
+## Astro Components
+
+Astro components use a special syntax that combines HTML, CSS, and JavaScript:
+
+\`\`\`astro
+---
+// Component script (runs at build time)
+const greeting = "Hello, World!";
+---
+
+<div class="greeting">
+  <h1>{greeting}</h1>
+</div>
+
+<style>
+  .greeting {
+    color: blue;
+  }
+</style>
+\`\`\`
+
+## Adding Interactivity
+
+While Astro generates static HTML by default, you can add client-side JavaScript when needed:
+
+\`\`\`astro
+<MyReactComponent client:load />
+<MyVueComponent client:visible />
+<MySvelteComponent client:idle />
+\`\`\```
+
+## Conclusion
+
+Astro represents a paradigm shift in web development, offering the best of both worlds: the performance of static sites with the developer experience of modern frameworks. Its unique approach to partial hydration and framework-agnostic components makes it an excellent choice for content-focused websites.
+
+Ready to dive deeper? Check out the [official Astro documentation](https://docs.astro.build) for more advanced topics and examples.
+  `,
+  date: "2025-01-15",
+  category: "Web Development",
+  readingTime: "8 min read",
+  image: "https://images.pexels.com/photos/177598/pexels-photo-177598.jpeg?auto=compress&cs=tinysrgb&w=1200",
+  author: {
+    name: "Alex Developer",
+    avatar: "https://images.pexels.com/photos/220453/pexels-photo-220453.jpeg?auto=compress&cs=tinysrgb&w=100"
+  }
+};
+
+// Format date
+const formattedDate = new Date(post.date).toLocaleDateString('en-US', {
+  year: 'numeric',
+  month: 'long',
+  day: 'numeric'
+});
+---
+
+<Layout 
+  title={`${post.title} - DevBlog`}
+  description={post.description}
+  image={post.image}
+>
+  <Header />
+  
+  <main class="main-content">
+    <article class="article">
+      <div class="container">
+        <div class="article-header">
+          <div class="article-meta">
+            <span class="article-category">{post.category}</span>
+            <span class="article-date">{formattedDate}</span>
+            <span class="article-reading-time">{post.readingTime}</span>
+          </div>
+          
+          <h1 class="article-title">{post.title}</h1>
+          <p class="article-description">{post.description}</p>
+          
+          <div class="article-author">
+            <img src={post.author.avatar} alt={post.author.name} class="author-avatar" />
+            <div class="author-info">
+              <span class="author-name">{post.author.name}</span>
+              <span class="author-role">Developer & Writer</span>
+            </div>
+          </div>
+        </div>
+        
+        {post.image && (
+          <div class="article-image">
+            <img src={post.image} alt={post.title} />
+          </div>
+        )}
+        
+        <div class="article-content">
+          <div class="prose" set:html={post.content.split('\n').map(line => {
+            if (line.startsWith('# ')) {
+              return `<h1>${line.substring(2)}</h1>`;
+            } else if (line.startsWith('## ')) {
+              return `<h2>${line.substring(3)}</h2>`;
+            } else if (line.startsWith('### ')) {
+              return `<h3>${line.substring(4)}</h3>`;
+            } else if (line.match(/^\d+\./)) {
+              return `<li>${line.substring(line.indexOf('.') + 2)}</li>`;
+            } else if (line.startsWith('- ')) {
+              return `<li>${line.substring(2)}</li>`;
+            } else if (line.trim() === '') {
+              return '<br>';
+            } else {
+              return `<p>${line}</p>`;
+            }
+          }).join('')} />
+        </div>
+        
+        <div class="article-footer">
+          <div class="article-tags">
+            <span class="tag">Astro</span>
+            <span class="tag">Web Development</span>
+            <span class="tag">Static Sites</span>
+            <span class="tag">Performance</span>
+          </div>
+          
+          <div class="article-share">
+            <span class="share-label">Share this article:</span>
+            <div class="share-buttons">
+              <a href="#" class="share-btn twitter" aria-label="Share on Twitter">
+                <svg width="20" height="20" fill="currentColor" viewBox="0 0 24 24">
+                  <path d="M23.953 4.57a10 10 0 01-2.825.775 4.958 4.958 0 002.163-2.723c-.951.555-2.005.959-3.127 1.184a4.92 4.92 0 00-8.384 4.482C7.69 8.095 4.067 6.13 1.64 3.162a4.822 4.822 0 00-.666 2.475c0 1.71.87 3.213 2.188 4.096a4.904 4.904 0 01-2.228-.616v.06a4.923 4.923 0 003.946 4.827 4.996 4.996 0 01-2.212.085 4.936 4.936 0 004.604 3.417 9.867 9.867 0 01-6.102 2.105c-.39 0-.779-.023-1.17-.067a13.995 13.995 0 007.557 2.209c9.053 0 13.998-7.496 13.998-13.985 0-.21 0-.42-.015-.63A9.935 9.935 0 0024 4.59z"/>
+                </svg>
+              </a>
+              <a href="#" class="share-btn linkedin" aria-label="Share on LinkedIn">
+                <svg width="20" height="20" fill="currentColor" viewBox="0 0 24 24">
+                  <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
+                </svg>
+              </a>
+              <a href="#" class="share-btn facebook" aria-label="Share on Facebook">
+                <svg width="20" height="20" fill="currentColor" viewBox="0 0 24 24">
+                  <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
+                </svg>
+              </a>
+            </div>
+          </div>
+        </div>
+        
+        <nav class="article-navigation">
+          <a href="/" class="nav-btn nav-prev">
+            <span class="nav-label">← Previous</span>
+            <span class="nav-title">Back to Home</span>
+          </a>
+          <a href="/blog" class="nav-btn nav-next">
+            <span class="nav-label">Next →</span>
+            <span class="nav-title">All Articles</span>
+          </a>
+        </nav>
+      </div>
+    </article>
+  </main>
+  
+  <Footer />
+</Layout>
+
+<style>
+  .main-content {
+    padding: 2rem 0;
+  }
+  
+  .article {
+    max-width: 800px;
+    margin: 0 auto;
+  }
+  
+  .article-header {
+    text-align: center;
+    margin-bottom: 3rem;
+  }
+  
+  .article-meta {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+    font-size: 0.875rem;
+    color: #6b7280;
+    flex-wrap: wrap;
+  }
+  
+  .article-category {
+    background: linear-gradient(135deg, #2563eb, #0891b2);
+    color: white;
+    padding: 0.25rem 0.75rem;
+    border-radius: 1rem;
+    font-weight: 500;
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+  
+  .article-title {
+    font-size: 3rem;
+    font-weight: 700;
+    line-height: 1.1;
+    margin-bottom: 1rem;
+    color: #111827;
+  }
+  
+  .article-description {
+    font-size: 1.25rem;
+    color: #6b7280;
+    line-height: 1.6;
+    margin-bottom: 2rem;
+  }
+  
+  .article-author {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+  }
+  
+  .author-avatar {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    object-fit: cover;
+  }
+  
+  .author-info {
+    display: flex;
+    flex-direction: column;
+    text-align: left;
+  }
+  
+  .author-name {
+    font-weight: 600;
+    color: #111827;
+  }
+  
+  .author-role {
+    font-size: 0.875rem;
+    color: #6b7280;
+  }
+  
+  .article-image {
+    margin-bottom: 3rem;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+  }
+  
+  .article-image img {
+    width: 100%;
+    height: 400px;
+    object-fit: cover;
+  }
+  
+  .article-content {
+    margin-bottom: 3rem;
+  }
+  
+  .article-footer {
+    border-top: 1px solid #e5e7eb;
+    padding-top: 2rem;
+    margin-bottom: 3rem;
+  }
+  
+  .article-tags {
+    display: flex;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+    margin-bottom: 2rem;
+  }
+  
+  .tag {
+    background-color: #f3f4f6;
+    color: #374151;
+    padding: 0.25rem 0.75rem;
+    border-radius: 1rem;
+    font-size: 0.875rem;
+    font-weight: 500;
+  }
+  
+  .article-share {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    flex-wrap: wrap;
+  }
+  
+  .share-label {
+    font-weight: 600;
+    color: #374151;
+  }
+  
+  .share-buttons {
+    display: flex;
+    gap: 0.75rem;
+  }
+  
+  .share-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    color: white;
+    transition: all 0.2s ease;
+  }
+  
+  .share-btn.twitter {
+    background-color: #1da1f2;
+  }
+  
+  .share-btn.linkedin {
+    background-color: #0077b5;
+  }
+  
+  .share-btn.facebook {
+    background-color: #1877f2;
+  }
+  
+  .share-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  }
+  
+  .article-navigation {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+    border-top: 1px solid #e5e7eb;
+    padding-top: 2rem;
+  }
+  
+  .nav-btn {
+    display: flex;
+    flex-direction: column;
+    padding: 1rem;
+    background: white;
+    border: 1px solid #e5e7eb;
+    border-radius: 8px;
+    text-decoration: none;
+    transition: all 0.2s ease;
+  }
+  
+  .nav-btn:hover {
+    border-color: #2563eb;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  }
+  
+  .nav-btn.nav-next {
+    text-align: right;
+  }
+  
+  .nav-label {
+    font-size: 0.875rem;
+    color: #6b7280;
+    margin-bottom: 0.25rem;
+  }
+  
+  .nav-title {
+    font-weight: 600;
+    color: #111827;
+  }
+  
+  @media (max-width: 768px) {
+    .article-title {
+      font-size: 2rem;
+    }
+    
+    .article-description {
+      font-size: 1.125rem;
+    }
+    
+    .article-image img {
+      height: 250px;
+    }
+    
+    .article-meta {
+      justify-content: center;
+    }
+    
+    .article-share {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+    
+    .article-navigation {
+      grid-template-columns: 1fr;
+    }
+    
+    .nav-btn.nav-next {
+      text-align: left;
+    }
+  }
+</style>

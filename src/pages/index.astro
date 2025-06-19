@@ -1,0 +1,270 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Header from '../components/Header.astro';
+import Hero from '../components/Hero.astro';
+import BlogCard from '../components/BlogCard.astro';
+import Footer from '../components/Footer.astro';
+
+// Sample blog posts data - in a real app, this would come from a CMS or markdown files
+const featuredPosts = [
+  {
+    title: "Getting Started with Astro: A Complete Guide",
+    description: "Learn how to build fast, modern websites with Astro's innovative island architecture and zero-JS by default approach.",
+    date: "2025-01-15",
+    category: "Web Development",
+    slug: "getting-started-with-astro",
+    readingTime: "8 min read",
+    image: "https://images.pexels.com/photos/177598/pexels-photo-177598.jpeg?auto=compress&cs=tinysrgb&w=600"
+  },
+  {
+    title: "Modern JavaScript ES2024 Features You Should Know",
+    description: "Explore the latest JavaScript features including pattern matching, temporal API, and more exciting additions to the language.",
+    date: "2025-01-12",
+    category: "JavaScript",
+    slug: "modern-javascript-es2024-features",
+    readingTime: "12 min read",
+    image: "https://images.pexels.com/photos/270348/pexels-photo-270348.jpeg?auto=compress&cs=tinysrgb&w=600"
+  },
+  {
+    title: "Building Responsive Layouts with CSS Grid",
+    description: "Master CSS Grid to create complex, responsive layouts with ease. Learn advanced techniques and best practices.",
+    date: "2025-01-08",
+    category: "CSS",
+    slug: "building-responsive-layouts-css-grid",
+    readingTime: "10 min read",
+    image: "https://images.pexels.com/photos/196644/pexels-photo-196644.jpeg?auto=compress&cs=tinysrgb&w=600"
+  },
+  {
+    title: "TypeScript Best Practices for Large Applications",
+    description: "Learn how to structure and organize TypeScript code for scalable, maintainable large-scale applications.",
+    date: "2025-01-05",
+    category: "TypeScript",
+    slug: "typescript-best-practices-large-applications",
+    readingTime: "15 min read",
+    image: "https://images.pexels.com/photos/574071/pexels-photo-574071.jpeg?auto=compress&cs=tinysrgb&w=600"
+  },
+  {
+    title: "Web Performance Optimization Techniques",
+    description: "Boost your website's performance with proven optimization strategies including code splitting, lazy loading, and more.",
+    date: "2025-01-02",
+    category: "Performance",
+    slug: "web-performance-optimization-techniques",
+    readingTime: "11 min read",
+    image: "https://images.pexels.com/photos/590016/pexels-photo-590016.jpeg?auto=compress&cs=tinysrgb&w=600"
+  },
+  {
+    title: "Introduction to Web Components",
+    description: "Discover the power of Web Components and how they can help you build reusable, framework-agnostic UI elements.",
+    date: "2024-12-28",
+    category: "Web Components",
+    slug: "introduction-to-web-components",
+    readingTime: "9 min read",
+    image: "https://images.pexels.com/photos/546819/pexels-photo-546819.jpeg?auto=compress&cs=tinysrgb&w=600"
+  }
+];
+---
+
+<Layout title="DevBlog - Modern Web Development Insights">
+  <Header />
+  <Hero />
+  
+  <main class="main-content">
+    <div class="container">
+      <section class="featured-section">
+        <div class="section-header">
+          <h2 class="section-title">Featured Articles</h2>
+          <p class="section-description">
+            Discover our latest and most popular articles on web development, programming, and technology.
+          </p>
+        </div>
+        
+        <div class="blog-grid">
+          {featuredPosts.map(post => (
+            <BlogCard
+              title={post.title}
+              description={post.description}
+              date={post.date}
+              category={post.category}
+              slug={post.slug}
+              readingTime={post.readingTime}
+              image={post.image}
+            />
+          ))}
+        </div>
+        
+        <div class="section-footer">
+          <a href="/blog" class="view-all-btn">
+            View All Articles
+            <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path>
+            </svg>
+          </a>
+        </div>
+      </section>
+      
+      <section class="newsletter-section">
+        <div class="newsletter-content">
+          <h2 class="newsletter-title">Stay Updated</h2>
+          <p class="newsletter-description">
+            Get the latest articles and insights delivered straight to your inbox. No spam, unsubscribe at any time.
+          </p>
+          <form class="newsletter-form">
+            <input 
+              type="email" 
+              placeholder="Enter your email address" 
+              class="newsletter-input"
+              required
+            />
+            <button type="submit" class="newsletter-btn">Subscribe</button>
+          </form>
+        </div>
+      </section>
+    </div>
+  </main>
+  
+  <Footer />
+</Layout>
+
+<style>
+  .main-content {
+    padding: 4rem 0;
+  }
+  
+  .featured-section {
+    margin-bottom: 5rem;
+  }
+  
+  .section-header {
+    text-align: center;
+    margin-bottom: 3rem;
+  }
+  
+  .section-title {
+    font-size: 2.5rem;
+    font-weight: 700;
+    margin-bottom: 1rem;
+    color: #111827;
+  }
+  
+  .section-description {
+    font-size: 1.125rem;
+    color: #6b7280;
+    max-width: 600px;
+    margin: 0 auto;
+    line-height: 1.6;
+  }
+  
+  .blog-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+    gap: 2rem;
+    margin-bottom: 3rem;
+  }
+  
+  .section-footer {
+    text-align: center;
+  }
+  
+  .view-all-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: linear-gradient(135deg, #2563eb, #0891b2);
+    color: white;
+    padding: 1rem 2rem;
+    border-radius: 0.5rem;
+    text-decoration: none;
+    font-weight: 600;
+    transition: all 0.3s ease;
+  }
+  
+  .view-all-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 25px rgba(37, 99, 235, 0.3);
+  }
+  
+  .newsletter-section {
+    background: linear-gradient(135deg, #f3f4f6, #e5e7eb);
+    border-radius: 1rem;
+    padding: 3rem;
+    text-align: center;
+  }
+  
+  .newsletter-title {
+    font-size: 2rem;
+    font-weight: 700;
+    margin-bottom: 1rem;
+    color: #111827;
+  }
+  
+  .newsletter-description {
+    font-size: 1.125rem;
+    color: #6b7280;
+    margin-bottom: 2rem;
+    max-width: 500px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  
+  .newsletter-form {
+    display: flex;
+    gap: 1rem;
+    max-width: 400px;
+    margin: 0 auto;
+  }
+  
+  .newsletter-input {
+    flex: 1;
+    padding: 0.875rem 1rem;
+    border: 1px solid #d1d5db;
+    border-radius: 0.5rem;
+    font-size: 1rem;
+    transition: border-color 0.2s ease;
+  }
+  
+  .newsletter-input:focus {
+    outline: none;
+    border-color: #2563eb;
+    box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+  }
+  
+  .newsletter-btn {
+    background: linear-gradient(135deg, #2563eb, #0891b2);
+    color: white;
+    border: none;
+    padding: 0.875rem 1.5rem;
+    border-radius: 0.5rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+  }
+  
+  .newsletter-btn:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(37, 99, 235, 0.3);
+  }
+  
+  @media (max-width: 768px) {
+    .main-content {
+      padding: 2rem 0;
+    }
+    
+    .section-title {
+      font-size: 2rem;
+    }
+    
+    .blog-grid {
+      grid-template-columns: 1fr;
+      gap: 1.5rem;
+    }
+    
+    .newsletter-form {
+      flex-direction: column;
+    }
+    
+    .newsletter-section {
+      padding: 2rem;
+    }
+  }
+</style>
+</Layout>
