@@ -1,0 +1,1016 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+
+// Gallery images data
+const galleryImages = [
+  {
+    id: 1,
+    src: "https://images.pexels.com/photos/177598/pexels-photo-177598.jpeg?auto=compress&cs=tinysrgb&w=800",
+    alt: "Modern web development workspace with laptop and code",
+    title: "Web Development Workspace",
+    category: "workspace",
+    description: "A clean, modern workspace setup for web development"
+  },
+  {
+    id: 2,
+    src: "https://images.pexels.com/photos/270348/pexels-photo-270348.jpeg?auto=compress&cs=tinysrgb&w=800",
+    alt: "JavaScript code on computer screen",
+    title: "JavaScript Code",
+    category: "code",
+    description: "Beautifully written JavaScript code on a high-resolution display"
+  },
+  {
+    id: 3,
+    src: "https://images.pexels.com/photos/196644/pexels-photo-196644.jpeg?auto=compress&cs=tinysrgb&w=800",
+    alt: "CSS Grid layout demonstration",
+    title: "CSS Grid Layout",
+    category: "design",
+    description: "Responsive grid layout showcasing modern CSS techniques"
+  },
+  {
+    id: 4,
+    src: "https://images.pexels.com/photos/574071/pexels-photo-574071.jpeg?auto=compress&cs=tinysrgb&w=800",
+    alt: "TypeScript code with advanced features",
+    title: "TypeScript Development",
+    category: "code",
+    description: "Advanced TypeScript code demonstrating type safety"
+  },
+  {
+    id: 5,
+    src: "https://images.pexels.com/photos/590016/pexels-photo-590016.jpeg?auto=compress&cs=tinysrgb&w=800",
+    alt: "Website performance metrics dashboard",
+    title: "Performance Dashboard",
+    category: "analytics",
+    description: "Real-time performance monitoring and analytics"
+  },
+  {
+    id: 6,
+    src: "https://images.pexels.com/photos/546819/pexels-photo-546819.jpeg?auto=compress&cs=tinysrgb&w=800",
+    alt: "Web Components architecture diagram",
+    title: "Web Components",
+    category: "architecture",
+    description: "Visual representation of web components architecture"
+  },
+  {
+    id: 7,
+    src: "https://images.pexels.com/photos/1181671/pexels-photo-1181671.jpeg?auto=compress&cs=tinysrgb&w=800",
+    alt: "React components in development",
+    title: "React Development",
+    category: "framework",
+    description: "React components being developed with modern tooling"
+  },
+  {
+    id: 8,
+    src: "https://images.pexels.com/photos/3184430/pexels-photo-3184430.jpeg?auto=compress&cs=tinysrgb&w=800",
+    alt: "Accessibility testing tools",
+    title: "Accessibility Testing",
+    category: "testing",
+    description: "Comprehensive accessibility testing and validation"
+  },
+  {
+    id: 9,
+    src: "https://images.pexels.com/photos/325229/pexels-photo-325229.jpeg?auto=compress&cs=tinysrgb&w=800",
+    alt: "API architecture and design",
+    title: "API Design",
+    category: "architecture",
+    description: "Well-designed API architecture for scalable applications"
+  },
+  {
+    id: 10,
+    src: "https://images.pexels.com/photos/1108101/pexels-photo-1108101.jpeg?auto=compress&cs=tinysrgb&w=800",
+    alt: "Mobile responsive design testing",
+    title: "Mobile Development",
+    category: "mobile",
+    description: "Mobile-first responsive design and testing"
+  },
+  {
+    id: 11,
+    src: "https://images.pexels.com/photos/1181467/pexels-photo-1181467.jpeg?auto=compress&cs=tinysrgb&w=800",
+    alt: "Database architecture and optimization",
+    title: "Database Design",
+    category: "database",
+    description: "Optimized database architecture for high performance"
+  },
+  {
+    id: 12,
+    src: "https://images.pexels.com/photos/1181675/pexels-photo-1181675.jpeg?auto=compress&cs=tinysrgb&w=800",
+    alt: "DevOps and deployment pipeline",
+    title: "DevOps Pipeline",
+    category: "devops",
+    description: "Automated deployment and continuous integration pipeline"
+  },
+  {
+    id: 13,
+    src: "https://images.pexels.com/photos/1181673/pexels-photo-1181673.jpeg?auto=compress&cs=tinysrgb&w=800",
+    alt: "Vue.js component development",
+    title: "Vue.js Components",
+    category: "framework",
+    description: "Building interactive components with Vue.js framework"
+  },
+  {
+    id: 14,
+    src: "https://images.pexels.com/photos/1181677/pexels-photo-1181677.jpeg?auto=compress&cs=tinysrgb&w=800",
+    alt: "Node.js backend architecture",
+    title: "Node.js Backend",
+    category: "backend",
+    description: "Scalable backend architecture using Node.js and Express"
+  },
+  {
+    id: 15,
+    src: "https://images.pexels.com/photos/1181263/pexels-photo-1181263.jpeg?auto=compress&cs=tinysrgb&w=800",
+    alt: "UI/UX design process",
+    title: "UI/UX Design Process",
+    category: "design",
+    description: "User-centered design process from wireframes to prototypes"
+  },
+  {
+    id: 16,
+    src: "https://images.pexels.com/photos/1181244/pexels-photo-1181244.jpeg?auto=compress&cs=tinysrgb&w=800",
+    alt: "Git version control workflow",
+    title: "Git Workflow",
+    category: "devops",
+    description: "Efficient version control and collaboration with Git"
+  },
+  {
+    id: 17,
+    src: "https://images.pexels.com/photos/1181272/pexels-photo-1181272.jpeg?auto=compress&cs=tinysrgb&w=800",
+    alt: "RESTful API documentation",
+    title: "API Documentation",
+    category: "architecture",
+    description: "Comprehensive API documentation for developers"
+  },
+  {
+    id: 18,
+    src: "https://images.pexels.com/photos/1181282/pexels-photo-1181282.jpeg?auto=compress&cs=tinysrgb&w=800",
+    alt: "Progressive Web App features",
+    title: "Progressive Web Apps",
+    category: "mobile",
+    description: "Building PWAs with offline capabilities and native app features"
+  },
+  {
+    id: 19,
+    src: "https://images.pexels.com/photos/1181298/pexels-photo-1181298.jpeg?auto=compress&cs=tinysrgb&w=800",
+    alt: "Machine learning integration",
+    title: "AI/ML Integration",
+    category: "analytics",
+    description: "Integrating machine learning models into web applications"
+  },
+  {
+    id: 20,
+    src: "https://images.pexels.com/photos/1181308/pexels-photo-1181308.jpeg?auto=compress&cs=tinysrgb&w=800",
+    alt: "Cybersecurity best practices",
+    title: "Web Security",
+    category: "security",
+    description: "Implementing security measures and best practices"
+  },
+  {
+    id: 21,
+    src: "https://images.pexels.com/photos/1181318/pexels-photo-1181318.jpeg?auto=compress&cs=tinysrgb&w=800",
+    alt: "Cloud infrastructure setup",
+    title: "Cloud Architecture",
+    category: "devops",
+    description: "Scalable cloud infrastructure and deployment strategies"
+  },
+  {
+    id: 22,
+    src: "https://images.pexels.com/photos/1181328/pexels-photo-1181328.jpeg?auto=compress&cs=tinysrgb&w=800",
+    alt: "Agile development methodology",
+    title: "Agile Development",
+    category: "process",
+    description: "Agile methodologies and team collaboration practices"
+  },
+  {
+    id: 23,
+    src: "https://images.pexels.com/photos/1181338/pexels-photo-1181338.jpeg?auto=compress&cs=tinysrgb&w=800",
+    alt: "Data visualization dashboard",
+    title: "Data Visualization",
+    category: "analytics",
+    description: "Interactive data visualization and dashboard design"
+  },
+  {
+    id: 24,
+    src: "https://images.pexels.com/photos/1181348/pexels-photo-1181348.jpeg?auto=compress&cs=tinysrgb&w=800",
+    alt: "Microservices architecture",
+    title: "Microservices",
+    category: "architecture",
+    description: "Microservices architecture for scalable applications"
+  }
+];
+
+// Categories for filtering
+const categories = [
+  { id: 'all', name: 'All', count: galleryImages.length },
+  { id: 'code', name: 'Code', count: galleryImages.filter(img => img.category === 'code').length },
+  { id: 'design', name: 'Design', count: galleryImages.filter(img => img.category === 'design').length },
+  { id: 'workspace', name: 'Workspace', count: galleryImages.filter(img => img.category === 'workspace').length },
+  { id: 'architecture', name: 'Architecture', count: galleryImages.filter(img => img.category === 'architecture').length },
+  { id: 'framework', name: 'Frameworks', count: galleryImages.filter(img => img.category === 'framework').length },
+  { id: 'analytics', name: 'Analytics', count: galleryImages.filter(img => img.category === 'analytics').length },
+  { id: 'testing', name: 'Testing', count: galleryImages.filter(img => img.category === 'testing').length },
+  { id: 'mobile', name: 'Mobile', count: galleryImages.filter(img => img.category === 'mobile').length },
+  { id: 'database', name: 'Database', count: galleryImages.filter(img => img.category === 'database').length },
+  { id: 'devops', name: 'DevOps', count: galleryImages.filter(img => img.category === 'devops').length },
+  { id: 'backend', name: 'Backend', count: galleryImages.filter(img => img.category === 'backend').length },
+  { id: 'security', name: 'Security', count: galleryImages.filter(img => img.category === 'security').length },
+  { id: 'process', name: 'Process', count: galleryImages.filter(img => img.category === 'process').length }
+];
+---
+
+<Layout title="Gallery - DevBlog" description="Explore our visual collection of web development inspiration, code examples, and technology insights.">
+  <Header />
+
+  <main class="main-content">
+    <div class="container">
+      <!-- Gallery Header -->
+      <div class="gallery-header">
+        <h1 class="gallery-title">Gallery</h1>
+        <p class="gallery-description">
+          A visual journey through the world of web development. Explore inspiring workspaces, beautiful code, innovative designs, and cutting-edge technologies.
+        </p>
+      </div>
+
+      <!-- Category Filter -->
+      <div class="filter-section">
+        <div class="filter-buttons">
+          {categories.map(category => (
+            <button
+              class={`filter-btn ${category.id === 'all' ? 'active' : ''}`}
+              data-category={category.id}
+            >
+              {category.name}
+              <span class="count">({category.count})</span>
+            </button>
+          ))}
+        </div>
+      </div>
+
+      <!-- Gallery Grid -->
+      <div class="gallery-grid" id="gallery-grid">
+        {galleryImages.map(image => (
+          <div class="gallery-item" data-category={image.category}>
+            <div class="gallery-image-container">
+              <img
+                src={image.src}
+                alt={image.alt}
+                class="gallery-image"
+                loading="lazy"
+              />
+              <div class="gallery-overlay">
+                <div class="gallery-info">
+                  <h3 class="gallery-item-title">{image.title}</h3>
+                  <p class="gallery-item-description">{image.description}</p>
+                  <button class="view-btn" data-image-id={image.id}>
+                    <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+                    </svg>
+                    View
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        ))}
+      </div>
+
+      <!-- Load More Button -->
+      <div class="load-more-section">
+        <button class="load-more-btn" id="load-more-btn" style="display: none;">
+          Load More Images
+          <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"></path>
+          </svg>
+        </button>
+      </div>
+    </div>
+  </main>
+
+  <!-- Modal for Image Viewing -->
+  <div class="modal" id="image-modal">
+    <div class="modal-backdrop" id="modal-backdrop"></div>
+    <div class="modal-content">
+      <button class="modal-close" id="modal-close">
+        <svg width="24" height="24" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+        </svg>
+      </button>
+      <div class="modal-image-container">
+        <img src="" alt="" class="modal-image" id="modal-image" />
+      </div>
+      <div class="modal-info">
+        <h3 class="modal-title" id="modal-title"></h3>
+        <p class="modal-description" id="modal-description"></p>
+      </div>
+      <div class="modal-navigation">
+        <button class="nav-btn prev-btn" id="prev-btn">
+          <svg width="24" height="24" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
+          </svg>
+        </button>
+        <button class="nav-btn next-btn" id="next-btn">
+          <svg width="24" height="24" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+          </svg>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <Footer />
+</Layout>
+
+<style>
+  .main-content {
+    padding: 4rem 0;
+  }
+
+  .gallery-header {
+    text-align: center;
+    margin-bottom: 3rem;
+  }
+
+  .gallery-title {
+    font-size: 3rem;
+    font-weight: 700;
+    margin-bottom: 1rem;
+    color: #111827;
+  }
+
+  .gallery-description {
+    font-size: 1.25rem;
+    color: #6b7280;
+    max-width: 700px;
+    margin: 0 auto;
+    line-height: 1.6;
+  }
+
+  .filter-section {
+    margin-bottom: 3rem;
+    text-align: center;
+  }
+
+  .filter-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+  }
+
+  .filter-btn {
+    background: white;
+    border: 1px solid #e5e7eb;
+    color: #6b7280;
+    padding: 0.5rem 1rem;
+    border-radius: 2rem;
+    font-size: 0.875rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  .filter-btn:hover {
+    border-color: #2563eb;
+    color: #2563eb;
+  }
+
+  .filter-btn.active {
+    background: linear-gradient(135deg, #2563eb, #0891b2);
+    border-color: #2563eb;
+    color: white;
+  }
+
+  .count {
+    opacity: 0.7;
+    font-size: 0.8em;
+  }
+
+  .gallery-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 2rem;
+    margin-bottom: 3rem;
+  }
+
+  .gallery-item {
+    position: relative;
+    border-radius: 1rem;
+    overflow: hidden;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+    transition: all 0.3s ease;
+  }
+
+  .gallery-item:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+  }
+
+  .gallery-image-container {
+    position: relative;
+    aspect-ratio: 4/3;
+    overflow: hidden;
+  }
+
+  .gallery-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.3s ease;
+  }
+
+  .gallery-item:hover .gallery-image {
+    transform: scale(1.05);
+  }
+
+  .gallery-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(135deg, rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.3));
+    display: flex;
+    align-items: flex-end;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    padding: 1.5rem;
+  }
+
+  .gallery-item:hover .gallery-overlay {
+    opacity: 1;
+  }
+
+  .gallery-info {
+    color: white;
+    width: 100%;
+  }
+
+  .gallery-item-title {
+    font-size: 1.25rem;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+  }
+
+  .gallery-item-description {
+    font-size: 0.875rem;
+    line-height: 1.4;
+    margin-bottom: 1rem;
+    opacity: 0.9;
+  }
+
+  .view-btn {
+    background: rgba(255, 255, 255, 0.2);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    color: white;
+    padding: 0.5rem 1rem;
+    border-radius: 0.5rem;
+    font-size: 0.875rem;
+    font-weight: 500;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    transition: all 0.2s ease;
+  }
+
+  .view-btn:hover {
+    background: rgba(255, 255, 255, 0.3);
+    transform: translateY(-1px);
+  }
+
+  .load-more-section {
+    text-align: center;
+  }
+
+  .load-more-btn {
+    background: linear-gradient(135deg, #2563eb, #0891b2);
+    color: white;
+    border: none;
+    padding: 1rem 2rem;
+    border-radius: 0.5rem;
+    font-weight: 600;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin: 0 auto;
+    transition: all 0.3s ease;
+  }
+
+  .load-more-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 25px rgba(37, 99, 235, 0.3);
+  }
+
+  /* Modal Styles */
+  .modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1000;
+    display: none;
+  }
+
+  .modal.active {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .modal-backdrop {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.8);
+    backdrop-filter: blur(5px);
+  }
+
+  .modal-content {
+    position: relative;
+    max-width: 90vw;
+    max-height: 90vh;
+    background: white;
+    border-radius: 1rem;
+    overflow: hidden;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+    z-index: 1001;
+  }
+
+  .modal-close {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    background: rgba(0, 0, 0, 0.5);
+    border: none;
+    color: white;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1002;
+    transition: background 0.2s ease;
+  }
+
+  .modal-close:hover {
+    background: rgba(0, 0, 0, 0.7);
+  }
+
+  .modal-image-container {
+    position: relative;
+    max-width: 800px;
+    max-height: 600px;
+  }
+
+  .modal-image {
+    width: 100%;
+    height: auto;
+    display: block;
+  }
+
+  .modal-info {
+    padding: 2rem;
+  }
+
+  .modal-title {
+    font-size: 1.5rem;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+    color: #111827;
+  }
+
+  .modal-description {
+    color: #6b7280;
+    line-height: 1.6;
+  }
+
+  .modal-navigation {
+    position: absolute;
+    top: 50%;
+    left: 0;
+    right: 0;
+    transform: translateY(-50%);
+    display: flex;
+    justify-content: space-between;
+    padding: 0 1rem;
+    pointer-events: none;
+  }
+
+  .nav-btn {
+    background: rgba(0, 0, 0, 0.5);
+    border: none;
+    color: white;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s ease;
+    pointer-events: auto;
+  }
+
+  .nav-btn:hover {
+    background: rgba(0, 0, 0, 0.7);
+    transform: scale(1.1);
+  }
+
+  @media (max-width: 768px) {
+    .main-content {
+      padding: 2rem 0;
+    }
+
+    .gallery-title {
+      font-size: 2rem;
+    }
+
+    .gallery-description {
+      font-size: 1.125rem;
+    }
+
+    .gallery-grid {
+      grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+      gap: 1rem;
+    }
+
+    .filter-buttons {
+      justify-content: center;
+    }
+
+    .modal-content {
+      max-width: 95vw;
+      max-height: 95vh;
+    }
+
+    .modal-info {
+      padding: 1.5rem;
+    }
+
+    .modal-navigation {
+      padding: 0 0.5rem;
+    }
+
+    .nav-btn {
+      width: 40px;
+      height: 40px;
+    }
+  }
+</style>
+
+<script>
+  // Gallery filtering functionality
+  class GalleryFilter {
+    filterButtons: NodeListOf<Element>;
+    galleryItems: NodeListOf<Element>;
+
+    constructor() {
+      this.filterButtons = document.querySelectorAll('.filter-btn');
+      this.galleryItems = document.querySelectorAll('.gallery-item');
+
+      this.init();
+    }
+
+    init() {
+      this.filterButtons.forEach((button: Element) => {
+        button.addEventListener('click', (e: Event) => {
+          const target = e.target as HTMLElement;
+          const category = target.closest('.filter-btn')?.dataset.category;
+          if (category) {
+            this.filterImages(category);
+            this.updateActiveButton(target.closest('.filter-btn') as HTMLElement);
+          }
+        });
+      });
+    }
+
+    filterImages(category: string) {
+      this.galleryItems.forEach((item: Element) => {
+        const itemElement = item as HTMLElement;
+        const itemCategory = itemElement.dataset.category;
+        if (category === 'all' || itemCategory === category) {
+          itemElement.style.display = 'block';
+        } else {
+          itemElement.style.display = 'none';
+        }
+      });
+    }
+
+    updateActiveButton(activeButton: HTMLElement) {
+      this.filterButtons.forEach((button: Element) => {
+        button.classList.remove('active');
+      });
+      activeButton.classList.add('active');
+    }
+  }
+
+  // Modal functionality
+  class GalleryModal {
+    modal: HTMLElement;
+    modalImage: HTMLImageElement;
+    modalTitle: HTMLElement;
+    modalDescription: HTMLElement;
+    closeBtn: HTMLElement;
+    backdrop: HTMLElement;
+    prevBtn: HTMLElement;
+    nextBtn: HTMLElement;
+    currentImageIndex: number;
+    images: any[];
+
+    constructor() {
+      this.modal = document.getElementById('image-modal') as HTMLElement;
+      this.modalImage = document.getElementById('modal-image') as HTMLImageElement;
+      this.modalTitle = document.getElementById('modal-title') as HTMLElement;
+      this.modalDescription = document.getElementById('modal-description') as HTMLElement;
+      this.closeBtn = document.getElementById('modal-close') as HTMLElement;
+      this.backdrop = document.getElementById('modal-backdrop') as HTMLElement;
+      this.prevBtn = document.getElementById('prev-btn') as HTMLElement;
+      this.nextBtn = document.getElementById('next-btn') as HTMLElement;
+      this.currentImageIndex = 0;
+      this.images = [
+        {
+          id: 1,
+          src: "https://images.pexels.com/photos/177598/pexels-photo-177598.jpeg?auto=compress&cs=tinysrgb&w=800",
+          alt: "Modern web development workspace with laptop and code",
+          title: "Web Development Workspace",
+          category: "workspace",
+          description: "A clean, modern workspace setup for web development"
+        },
+        {
+          id: 2,
+          src: "https://images.pexels.com/photos/270348/pexels-photo-270348.jpeg?auto=compress&cs=tinysrgb&w=800",
+          alt: "JavaScript code on computer screen",
+          title: "JavaScript Code",
+          category: "code",
+          description: "Beautifully written JavaScript code on a high-resolution display"
+        },
+        {
+          id: 3,
+          src: "https://images.pexels.com/photos/196644/pexels-photo-196644.jpeg?auto=compress&cs=tinysrgb&w=800",
+          alt: "CSS Grid layout demonstration",
+          title: "CSS Grid Layout",
+          category: "design",
+          description: "Responsive grid layout showcasing modern CSS techniques"
+        },
+        {
+          id: 4,
+          src: "https://images.pexels.com/photos/574071/pexels-photo-574071.jpeg?auto=compress&cs=tinysrgb&w=800",
+          alt: "TypeScript code with advanced features",
+          title: "TypeScript Development",
+          category: "code",
+          description: "Advanced TypeScript code demonstrating type safety"
+        },
+        {
+          id: 5,
+          src: "https://images.pexels.com/photos/590016/pexels-photo-590016.jpeg?auto=compress&cs=tinysrgb&w=800",
+          alt: "Website performance metrics dashboard",
+          title: "Performance Dashboard",
+          category: "analytics",
+          description: "Real-time performance monitoring and analytics"
+        },
+        {
+          id: 6,
+          src: "https://images.pexels.com/photos/546819/pexels-photo-546819.jpeg?auto=compress&cs=tinysrgb&w=800",
+          alt: "Web Components architecture diagram",
+          title: "Web Components",
+          category: "architecture",
+          description: "Visual representation of web components architecture"
+        },
+        {
+          id: 7,
+          src: "https://images.pexels.com/photos/1181671/pexels-photo-1181671.jpeg?auto=compress&cs=tinysrgb&w=800",
+          alt: "React components in development",
+          title: "React Development",
+          category: "framework",
+          description: "React components being developed with modern tooling"
+        },
+        {
+          id: 8,
+          src: "https://images.pexels.com/photos/3184430/pexels-photo-3184430.jpeg?auto=compress&cs=tinysrgb&w=800",
+          alt: "Accessibility testing tools",
+          title: "Accessibility Testing",
+          category: "testing",
+          description: "Comprehensive accessibility testing and validation"
+        },
+        {
+          id: 9,
+          src: "https://images.pexels.com/photos/325229/pexels-photo-325229.jpeg?auto=compress&cs=tinysrgb&w=800",
+          alt: "API architecture and design",
+          title: "API Design",
+          category: "architecture",
+          description: "Well-designed API architecture for scalable applications"
+        },
+        {
+          id: 10,
+          src: "https://images.pexels.com/photos/1108101/pexels-photo-1108101.jpeg?auto=compress&cs=tinysrgb&w=800",
+          alt: "Mobile responsive design testing",
+          title: "Mobile Development",
+          category: "mobile",
+          description: "Mobile-first responsive design and testing"
+        },
+        {
+          id: 11,
+          src: "https://images.pexels.com/photos/1181467/pexels-photo-1181467.jpeg?auto=compress&cs=tinysrgb&w=800",
+          alt: "Database architecture and optimization",
+          title: "Database Design",
+          category: "database",
+          description: "Optimized database architecture for high performance"
+        },
+        {
+          id: 12,
+          src: "https://images.pexels.com/photos/1181675/pexels-photo-1181675.jpeg?auto=compress&cs=tinysrgb&w=800",
+          alt: "DevOps and deployment pipeline",
+          title: "DevOps Pipeline",
+          category: "devops",
+          description: "Automated deployment and continuous integration pipeline"
+        },
+        {
+          id: 13,
+          src: "https://images.pexels.com/photos/1181673/pexels-photo-1181673.jpeg?auto=compress&cs=tinysrgb&w=800",
+          alt: "Vue.js component development",
+          title: "Vue.js Components",
+          category: "framework",
+          description: "Building interactive components with Vue.js framework"
+        },
+        {
+          id: 14,
+          src: "https://images.pexels.com/photos/1181677/pexels-photo-1181677.jpeg?auto=compress&cs=tinysrgb&w=800",
+          alt: "Node.js backend architecture",
+          title: "Node.js Backend",
+          category: "backend",
+          description: "Scalable backend architecture using Node.js and Express"
+        },
+        {
+          id: 15,
+          src: "https://images.pexels.com/photos/1181263/pexels-photo-1181263.jpeg?auto=compress&cs=tinysrgb&w=800",
+          alt: "UI/UX design process",
+          title: "UI/UX Design Process",
+          category: "design",
+          description: "User-centered design process from wireframes to prototypes"
+        },
+        {
+          id: 16,
+          src: "https://images.pexels.com/photos/1181244/pexels-photo-1181244.jpeg?auto=compress&cs=tinysrgb&w=800",
+          alt: "Git version control workflow",
+          title: "Git Workflow",
+          category: "devops",
+          description: "Efficient version control and collaboration with Git"
+        },
+        {
+          id: 17,
+          src: "https://images.pexels.com/photos/1181272/pexels-photo-1181272.jpeg?auto=compress&cs=tinysrgb&w=800",
+          alt: "RESTful API documentation",
+          title: "API Documentation",
+          category: "architecture",
+          description: "Comprehensive API documentation for developers"
+        },
+        {
+          id: 18,
+          src: "https://images.pexels.com/photos/1181282/pexels-photo-1181282.jpeg?auto=compress&cs=tinysrgb&w=800",
+          alt: "Progressive Web App features",
+          title: "Progressive Web Apps",
+          category: "mobile",
+          description: "Building PWAs with offline capabilities and native app features"
+        },
+        {
+          id: 19,
+          src: "https://images.pexels.com/photos/1181298/pexels-photo-1181298.jpeg?auto=compress&cs=tinysrgb&w=800",
+          alt: "Machine learning integration",
+          title: "AI/ML Integration",
+          category: "analytics",
+          description: "Integrating machine learning models into web applications"
+        },
+        {
+          id: 20,
+          src: "https://images.pexels.com/photos/1181308/pexels-photo-1181308.jpeg?auto=compress&cs=tinysrgb&w=800",
+          alt: "Cybersecurity best practices",
+          title: "Web Security",
+          category: "security",
+          description: "Implementing security measures and best practices"
+        },
+        {
+          id: 21,
+          src: "https://images.pexels.com/photos/1181318/pexels-photo-1181318.jpeg?auto=compress&cs=tinysrgb&w=800",
+          alt: "Cloud infrastructure setup",
+          title: "Cloud Architecture",
+          category: "devops",
+          description: "Scalable cloud infrastructure and deployment strategies"
+        },
+        {
+          id: 22,
+          src: "https://images.pexels.com/photos/1181328/pexels-photo-1181328.jpeg?auto=compress&cs=tinysrgb&w=800",
+          alt: "Agile development methodology",
+          title: "Agile Development",
+          category: "process",
+          description: "Agile methodologies and team collaboration practices"
+        },
+        {
+          id: 23,
+          src: "https://images.pexels.com/photos/1181338/pexels-photo-1181338.jpeg?auto=compress&cs=tinysrgb&w=800",
+          alt: "Data visualization dashboard",
+          title: "Data Visualization",
+          category: "analytics",
+          description: "Interactive data visualization and dashboard design"
+        },
+        {
+          id: 24,
+          src: "https://images.pexels.com/photos/1181348/pexels-photo-1181348.jpeg?auto=compress&cs=tinysrgb&w=800",
+          alt: "Microservices architecture",
+          title: "Microservices",
+          category: "architecture",
+          description: "Microservices architecture for scalable applications"
+        }
+      ];
+
+      this.init();
+    }
+
+    init() {
+      // Add click handlers to view buttons
+      document.querySelectorAll('.view-btn').forEach((btn: Element) => {
+        btn.addEventListener('click', (e: Event) => {
+          const target = e.target as HTMLElement;
+          const buttonElement = target.closest('.view-btn') as HTMLElement;
+          const imageId = parseInt(buttonElement?.dataset.imageId || '0');
+          this.openModal(imageId);
+        });
+      });
+
+      // Close modal handlers
+      this.closeBtn.addEventListener('click', () => this.closeModal());
+      this.backdrop.addEventListener('click', () => this.closeModal());
+
+      // Navigation handlers
+      this.prevBtn.addEventListener('click', () => this.showPrevImage());
+      this.nextBtn.addEventListener('click', () => this.showNextImage());
+
+      // Keyboard navigation
+      document.addEventListener('keydown', (e: KeyboardEvent) => {
+        if (!this.modal.classList.contains('active')) return;
+
+        switch (e.key) {
+          case 'Escape':
+            this.closeModal();
+            break;
+          case 'ArrowLeft':
+            this.showPrevImage();
+            break;
+          case 'ArrowRight':
+            this.showNextImage();
+            break;
+        }
+      });
+    }
+
+    openModal(imageId: number) {
+      const image = this.images.galleryImages.find(img => img.id === imageId);
+      if (!image) return;
+
+      this.currentImageIndex = this.images.galleryImages.findIndex(img => img.id === imageId);
+      this.updateModalContent(image);
+      this.modal.classList.add('active');
+      document.body.style.overflow = 'hidden';
+    }
+
+    closeModal() {
+      this.modal.classList.remove('active');
+      document.body.style.overflow = '';
+    }
+
+    updateModalContent(image: typeof galleryImages[0]) {
+      this.modalImage.src = image.src;
+      this.modalImage.alt = image.alt;
+      this.modalTitle.textContent = image.title;
+      this.modalDescription.textContent = image.description;
+    }
+
+    showPrevImage() {
+      this.currentImageIndex = (this.currentImageIndex - 1 + this.images.galleryImages.length) % this.images.galleryImages.length;
+      const image = this.images.galleryImages[this.currentImageIndex];
+      this.updateModalContent(image);
+    }
+
+    showNextImage() {
+      this.currentImageIndex = (this.currentImageIndex + 1) % this.images.galleryImages.length;
+      const image = this.images.galleryImages[this.currentImageIndex];
+      this.updateModalContent(image);
+    }
+  }
+
+  // Initialize functionality when DOM is loaded
+  document.addEventListener('DOMContentLoaded', () => {
+    new GalleryFilter();
+    new GalleryModal();
+  });
+</script>
